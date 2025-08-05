@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8afd080d.css",
+    "main.js": "/static/js/main.235a7b80.js",
+    "static/media/404.png": "/static/media/404.f5ff45bc044cdbd2626c.png",
+    "static/media/image1.png": "/static/media/image1.64c7c00de5566a9ce7db.png",
+    "static/media/image6.jpg": "/static/media/image6.37c06bb0fe1ea67fd59b.jpg",
+    "static/media/image4.jpg": "/static/media/image4.a930e3d5c25baccec5c4.jpg",
+    "static/media/image9.webp": "/static/media/image9.a9138e063be637433dba.webp",
+    "static/media/image2.jpg": "/static/media/image2.35818500c0e66b207ee7.jpg",
+    "static/media/bghome.svg": "/static/media/bghome.354d9966c701455b23db.svg",
+    "static/media/rzp_logo.png": "/static/media/rzp_logo.db1cd7db1b52c2ed8e3d.png",
+    "static/media/image8.webp": "/static/media/image8.10e12959487599e14332.webp",
+    "static/media/vidyagan-ailogo.png": "/static/media/vidyagan-ailogo.182ceded8b125728c85d.png",
+    "static/media/image3.webp": "/static/media/image3.85950c42437820f45bb8.webp",
+    "static/media/frame.png": "/static/media/frame.3a238e5f26d676376e1d.png",
+    "static/media/signup.webp": "/static/media/signup.acaf50bcb11d9aec44b4.webp",
+    "static/media/login.webp": "/static/media/login.5eeb0b81544a40330d4b.webp",
+    "index.html": "/index.html",
+    "main.8afd080d.css.map": "/static/css/main.8afd080d.css.map",
+    "main.235a7b80.js.map": "/static/js/main.235a7b80.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8afd080d.css",
+    "static/js/main.235a7b80.js"
+  ]
+}
