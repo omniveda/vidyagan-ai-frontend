@@ -5,6 +5,7 @@ import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI"
+import { getPdfUrl } from "../../../utils/pdfUtils"
 
 export default function EnrolledCourses() {
   const { token } = useSelector((state) => state.auth)
@@ -42,7 +43,7 @@ export default function EnrolledCourses() {
           <div className="flex rounded-t-lg bg-black ">
             <p className="w-[40%] px-5 py-3">Course Name</p>
             <p className="w-1/5 px-2 py-3">Duration</p>
-
+            <p className="w-1/5 px-2 py-3">Ebook</p>
             <p className="flex-1 px-2 py-3">Progress</p>
           </div>
           {/* Course Names */}
@@ -76,6 +77,20 @@ export default function EnrolledCourses() {
                 </div>
               </div>
               <div className="w-1/5 px-2 py-3">{course?.totalDuration}</div>
+              <div className="w-1/5 px-2 py-3">
+                {course.ebook ? (
+                  <a
+                    href={getPdfUrl(course.ebook)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 underline text-sm"
+                  >
+                    📄 View PDF
+                  </a>
+                ) : (
+                  <span className="text-gray-500 text-sm">No PDF</span>
+                )}
+              </div>
 
               <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
                 <p>Progress: {course.progressPercentage || 0}%</p>

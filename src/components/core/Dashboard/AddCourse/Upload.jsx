@@ -34,7 +34,9 @@ export default function Upload({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: accept 
-      ? { [accept]: [accept] }
+      ? accept.includes('.pdf') 
+        ? { "application/pdf": [".pdf"] }
+        : { [accept]: [accept] }
       : !video
       ? { "image/*": [".jpeg", ".jpg", ".png"] }
       : { "video/*": [".mp4"] },
@@ -74,12 +76,18 @@ export default function Upload({
   <input {...getInputProps()} ref={inputRef} />
         {previewSource ? (
         <div className="flex w-full flex-col p-6">
-          {!video ? (
+          {!video && !accept?.includes('.pdf') ? (
             <img
               src={previewSource}
               alt="Preview"
               className="h-full w-full rounded-md object-cover"
             />
+          ) : accept?.includes('.pdf') ? (
+            <div className="flex flex-col items-center justify-center p-4">
+              <div className="text-4xl text-red-500 mb-2">📄</div>
+              <p className="text-sm text-black font-medium">PDF File Selected</p>
+              <p className="text-xs text-gray-600 mt-1">{selectedFile?.name}</p>
+            </div>
           ) : (
             <Player aspectRatio="16:9" playsInline src={previewSource} />
           )}
@@ -106,7 +114,7 @@ export default function Upload({
         <FiUploadCloud className="text-2xl text-yellow-50" />
       </div>
       <p className="mt-2 max-w-[200px] text-center text-sm text-black">
-        Drag and drop an {!video ? "image" : "video"}, or click to{" "}
+        Drag and drop an {accept?.includes('.pdf') ? "PDF" : !video ? "image" : "video"}, or click to{" "}
         <span className="font-semibold text-yellow-50">Browse</span> a file
       </p>
       <ul className="mt-10 flex list-disc justify-between space-x-12 text-center  text-xs text-black">

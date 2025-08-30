@@ -7,6 +7,7 @@ import { courses } from "../../../services/apis";
 import axios from "axios";
 import { getCourseLiveSessions } from '../../../services/operations/liveSessionAPI';
 import LiveSessionCard from '../../LiveSessionCard';
+import { getPdfUrl } from '../../../utils/pdfUtils';
 
 export default function StudentDashboard() {
   const { token } = useSelector((state) => state.auth);
@@ -152,6 +153,18 @@ export default function StudentDashboard() {
                         Continue
                       </button>
                     </div>
+                    {course.ebook && (
+                      <div className="mt-3">
+                        <a
+                          href={getPdfUrl(course.ebook)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-semibold border border-blue-600 rounded px-3 py-1 transition-colors duration-200"
+                        >
+                          📄 View Course Ebook
+                        </a>
+                      </div>
+                    )}
 
                     {/* Live Sessions for this course */}
                     {liveSessionsByCourse[course._id] && liveSessionsByCourse[course._id].filter(session => new Date(session.endTime) > new Date()).length > 0 && (

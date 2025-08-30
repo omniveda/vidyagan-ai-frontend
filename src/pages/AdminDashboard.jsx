@@ -28,7 +28,7 @@ const AdminDashboard = () => {
     try {
       // Fetch categories
       const categoryResponse = await axios.get(
-        "http://localhost:4000/api/v1/course/showAllCategories",
+        "https://vidyagan-ai.com/api/v1/course/showAllCategories",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ const AdminDashboard = () => {
 
       // Fetch analytics
       const analyticsResponse = await axios.get(
-        "http://localhost:4000/api/v1/admin/analytics",
+        "https://vidyagan-ai.com/api/v1/admin/analytics",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
 
       // Fetch students
       const studentsResponse = await axios.get(
-        "http://localhost:4000/api/v1/admin/students",
+        "https://vidyagan-ai.com/api/v1/admin/students",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const AdminDashboard = () => {
 
       // Fetch instructors
       const instructorsResponse = await axios.get(
-        "http://localhost:4000/api/v1/admin/instructors",
+        "https://vidyagan-ai.com/api/v1/admin/instructors",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ const AdminDashboard = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/course/createCategory",
+        "https://vidyagan-ai.com/api/v1/course/createCategory",
         { name, description },
         {
           headers: {

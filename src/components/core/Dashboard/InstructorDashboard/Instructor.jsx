@@ -5,6 +5,7 @@ import { getInstructorData } from '../../../../services/operations/profileAPI';
 import InstructorChart from './InstructorChart';
 import { Link } from 'react-router-dom';
 import { createLiveSession, getCourseLiveSessions } from '../../../../services/operations/liveSessionAPI';
+import { getPdfUrl } from '../../../../utils/pdfUtils';
 
 export default function Instructor() {
   const { token } = useSelector((state) => state.auth);
@@ -201,6 +202,18 @@ export default function Instructor() {
                       <p className="text-xs font-medium text-black">|</p>
                       <p className="text-xs font-medium text-black">Rs. {course.price}</p>
                     </div>
+                    {course.ebook && (
+                      <div className="mt-2">
+                        <a
+                          href={getPdfUrl(course.ebook)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-blue-600 hover:text-blue-800 underline"
+                        >
+                          📄 View Ebook
+                        </a>
+                      </div>
+                    )}
 
                     <button
                       className="mt-2 px-3 py-1 bg-blue-600 text-[white] rounded hover:bg-blue-700"

@@ -175,6 +175,7 @@ import {
 } from "../../../../services/operations/courseDetailsAPI";
 import { COURSE_STATUS } from "../../../../utils/constants";
 import ConfirmationModal from "../../../common/ConfirmationModal";
+import { getPdfUrl } from "../../../../utils/pdfUtils";
 
 export default function CoursesTable({ courses, setCourses }) {
   const dispatch = useDispatch();
@@ -216,6 +217,9 @@ export default function CoursesTable({ courses, setCourses }) {
             </Th>
             <Th className="text-left text-sm font-medium uppercase text-black">
               Price
+            </Th>
+            <Th className="text-left text-sm font-medium uppercase text-black">
+              Ebook
             </Th>
 
             <Th className="text-left text-sm font-medium uppercase text-black">
@@ -278,6 +282,20 @@ export default function CoursesTable({ courses, setCourses }) {
                 </Td>
                 <Td className="text-sm font-medium text-black">
                   ₹{course.price}
+                </Td>
+                <Td className="text-sm font-medium text-black">
+                  {course.ebook ? (
+                    <a
+                      href={getPdfUrl(course.ebook)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 underline text-sm"
+                    >
+                      📄 View PDF
+                    </a>
+                  ) : (
+                    <span className="text-gray-500">No PDF</span>
+                  )}
                 </Td>
 
                 <Td className="text-sm font-medium text-black ">
