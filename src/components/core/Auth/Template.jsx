@@ -97,10 +97,11 @@ function Template({ title, description1, description2, image, formType }) {
             </div>
             <button
               className="mt-6 flex items-center justify-center rounded-md w-full py-2 bg-gray-100 text-gray-700 transition duration-300 hover:scale-95 border border-gray-300"
-              onClick={handleGoogleSignInClick}
+              // onClick={handleGoogleSignInClick}
+              onClick={() => navigate(formType === "signup" ? "/login" : "/signup")}
             >
-              <FcGoogle className="text-xl mr-2" />
-              Sign in with Google
+              {/* <FcGoogle className="text-xl mr-2" /> */}
+              {formType === "signup" ? "Sign in" : "Sign up"}
             </button>
           </div>
           <div className="relative mx-auto w-11/12 max-w-[450px] md:mx-0">

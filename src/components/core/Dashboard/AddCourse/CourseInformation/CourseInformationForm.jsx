@@ -215,7 +215,7 @@ export default function CourseInformationForm() {
               required: "Course Price is required",
               valueAsNumber: true,
               min: {
-                value: 1,
+                value: 0,
                 message: "Price must be greater than 0",
               },
               pattern: {

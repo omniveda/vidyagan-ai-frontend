@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ProgressBar from "@ramonak/react-progress-bar";
+// import ProgressBar from "@ramonak/react-progress-bar";
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI";
 import { courses } from "../../../services/apis";
 import axios from "axios";
 import { getCourseLiveSessions } from '../../../services/operations/liveSessionAPI';
 import LiveSessionCard from '../../LiveSessionCard';
 import { getPdfUrl } from '../../../utils/pdfUtils';
+import MCQModal from "../../core/Course/MCQModal";
 
 export default function StudentDashboard() {
   const { token } = useSelector((state) => state.auth);
@@ -18,6 +19,8 @@ export default function StudentDashboard() {
   const [trendingCourses, setTrendingCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [liveSessionsByCourse, setLiveSessionsByCourse] = useState({});
+  const [mcqModalOpen, setMcqModalOpen] = useState(false);
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
 
   const getEnrolledCourses = async () => {
     try {
@@ -139,19 +142,31 @@ export default function StudentDashboard() {
                         ? `${course.courseDescription.slice(0, 100)}...`
                         : course.courseDescription}
                     </p>
-                    <ProgressBar
+                    {/* <ProgressBar
                       completed={course.progressPercentage || 0}
                       height="8px"
                       isLabelVisible={false}
                       bgColor="#4F46E5"
-                    />
+                    /> */}
                     <div className="flex justify-between items-center mt-4">
                       <span className="text-sm text-gray-500">
                         Duration: {course?.totalDuration || "N/A"}
                       </span>
-                      <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Continue
-                      </button>
+                      <div className="flex gap-2">
+                        <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                          Continue
+                        </button>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedCourseId(course._id);
+                            setMcqModalOpen(true);
+                          }}
+                          className="text-green-600 hover:text-green-800 font-medium text-sm"
+                        >
+                          Take Quiz
+                        </button>
+                      </div>
                     </div>
                     {course.ebook && (
                       <div className="mt-3">
@@ -253,6 +268,13 @@ export default function StudentDashboard() {
           </button>
         </div>
       </div>
+      
+      {/* MCQ Modal */}
+      <MCQModal
+        courseId={selectedCourseId}
+        isOpen={mcqModalOpen}
+        onClose={() => setMcqModalOpen(false)}
+      />
     </div>
   );
 }

@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react"
-import ProgressBar from "@ramonak/react-progress-bar"
+// import ProgressBar from "@ramonak/react-progress-bar"
 import { BiDotsVerticalRounded } from "react-icons/bi"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI"
 import { getPdfUrl } from "../../../utils/pdfUtils"
+import MCQModal from "../../core/Course/MCQModal"
 
 export default function EnrolledCourses() {
   const { token } = useSelector((state) => state.auth)
   const navigate = useNavigate()
 
   const [enrolledCourses, setEnrolledCourses] = useState(null)
+  const [mcqModalOpen, setMcqModalOpen] = useState(false)
+  const [selectedCourseId, setSelectedCourseId] = useState(null)
+  
   const getEnrolledCourses = async () => {
     try {
       const res = await getUserEnrolledCourses(token);
@@ -41,10 +45,11 @@ export default function EnrolledCourses() {
         <div className="my-8 text-black">
           {/* Headings */}
           <div className="flex rounded-t-lg bg-black ">
-            <p className="w-[40%] px-5 py-3">Course Name</p>
-            <p className="w-1/5 px-2 py-3">Duration</p>
-            <p className="w-1/5 px-2 py-3">Ebook</p>
-            <p className="flex-1 px-2 py-3">Progress</p>
+            <p className="w-[35%] px-5 py-3">Course Name</p>
+            <p className="w-[15%] px-2 py-3">Duration</p>
+            <p className="w-[15%] px-2 py-3">Ebook</p>
+            <p className="w-[20%] px-2 py-3">Progress</p>
+            <p className="w-[15%] px-2 py-3">Actions</p>
           </div>
           {/* Course Names */}
           {enrolledCourses.map((course, i, arr) => (
@@ -92,18 +97,36 @@ export default function EnrolledCourses() {
                 )}
               </div>
 
-              <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
+              <div className="flex w-[20%] flex-col gap-2 px-2 py-3">
                 <p>Progress: {course.progressPercentage || 0}%</p>
-                <ProgressBar
+                {/* <ProgressBar
                   completed={course.progressPercentage || 0}
                   height="8px"
                   isLabelVisible={false}
-                />
+                /> */}
+              </div>
+              <div className="w-[15%] px-2 py-3">
+                <button 
+                  onClick={() => {
+                    setSelectedCourseId(course._id);
+                    setMcqModalOpen(true);
+                  }}
+                  className="text-green-600 hover:text-green-800 font-medium text-sm underline"
+                >
+                  Take Quiz
+                </button>
               </div>
             </div>
           ))}
         </div>
       )}
+      
+      {/* MCQ Modal */}
+      <MCQModal
+        courseId={selectedCourseId}
+        isOpen={mcqModalOpen}
+        onClose={() => setMcqModalOpen(false)}
+      />
     </>
   )
 }

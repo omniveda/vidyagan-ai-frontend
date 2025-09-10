@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { FaRegClock as Clock, FaUsers as Users, FaBookOpen as BookOpen, FaStar as Star, FaCalendarAlt as Calendar, FaUser as User, FaInfoCircle as Info, FaTag as Tag, FaListUl as List, FaCheckCircle as CheckCircle } from 'react-icons/fa';
+import MCQTest from '../components/core/Course/MCQTest';
 
 const CourseDetail = () => {
   const { courseId } = useParams();
@@ -33,6 +34,10 @@ const CourseDetail = () => {
   if (error) return <div className="text-center py-20 text-[red]">{error}</div>;
   if (!course) return <div className="text-center py-20 text-[#6B7280]">Course not found.</div>;
 
+  // Check if user is enrolled in this course
+  const isEnrolled = user?.courses?.includes(courseId) || 
+                    course?.studentsEnrolled?.some(student => student.toString() === user?._id);
+
   const handleBuyCourse = () => {
     if (token) {
       buyCourse(token, [courseId], user, navigate, dispatch);
@@ -47,7 +52,6 @@ const CourseDetail = () => {
       btn2Handler: () => setConfirmationModal(null),
     });
   };
-
 
   // Helper for date formatting
   const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString();
@@ -173,11 +177,22 @@ const CourseDetail = () => {
                     </div>
                   </div>
                 )}
-                <div>
-                  <Button className="w-full text-lg py-6 rounded-xl shadow-lg bg-gradient-to-r from-[#1C64F2] to-[#7E3AF2] hover:from-[#6C2BD9] hover:to-[#1A56DB] text-[white] font-bold" onClick={handleBuyCourse}>
-                    Enroll Now
-                  </Button>
-                </div>
+                
+                {/* MCQ Test Section for enrolled students */}
+                {isEnrolled && (
+                  <div>
+                    <h4 className="font-semibold mb-4 flex items-center gap-2"><BookOpen className="h-4 w-4 text-[#9F580A]" /> Practice Quiz:</h4>
+                    <MCQTest courseId={courseId} />
+                  </div>
+                )}
+
+                {!isEnrolled && (
+                  <div>
+                    <Button className="w-full text-lg py-6 rounded-xl shadow-lg bg-gradient-to-r from-[#1C64F2] to-[#7E3AF2] hover:from-[#6C2BD9] hover:to-[#1A56DB] text-[white] font-bold" onClick={handleBuyCourse}>
+                      Enroll Now
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -242,6 +257,12 @@ const CourseDetail = () => {
                   <Info className="h-4 w-4" />
                   <span>Status: {course.status}</span>
                 </div>
+                {isEnrolled && (
+                  <div className="flex items-center gap-2 mb-2 text-green-600">
+                    <CheckCircle className="h-4 w-4" />
+                    <span>You are enrolled in this course</span>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
@@ -251,4 +272,4 @@ const CourseDetail = () => {
   );
 };
 
-export default CourseDetail; 
+export default CourseDetail;
