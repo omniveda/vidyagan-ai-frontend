@@ -286,6 +286,28 @@ const VideoDetails = () => {
       <p className="pt-2 pb-6 text-sm sm:text-base text-white">
         {videoData?.description}
       </p>
+
+      {/* PDF Section */}
+      {videoData?.pdfUrl && (
+        <div className="mt-6 p-4 bg-richblack-700 rounded-lg">
+          <h2 className="text-xl font-semibold text-white mb-3">Lecture Materials</h2>
+          <div className="flex items-center gap-4">
+            <div className="text-4xl text-red-500">📄</div>
+            <div className="flex-1">
+              <p className="text-white font-medium">PDF Document Available</p>
+              <p className="text-gray-300 text-sm">Click to view or download the lecture PDF</p>
+            </div>
+            <a
+              href={videoData.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200"
+            >
+              View PDF
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

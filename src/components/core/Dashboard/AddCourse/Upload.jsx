@@ -53,7 +53,7 @@ export default function Upload({
   }
 
   useEffect(() => {
-    register(name, { required: true })
+    register(name, { required: false })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [register])
 

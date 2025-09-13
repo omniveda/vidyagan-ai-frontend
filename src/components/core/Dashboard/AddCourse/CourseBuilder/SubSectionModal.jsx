@@ -42,6 +42,7 @@ export default function SubSectionModal({
       setValue("lectureTitle", modalData.title)
       setValue("lectureDesc", modalData.description)
       setValue("lectureVideo", modalData.videoUrl)
+      setValue("lecturePdf", modalData.pdfUrl)
     }
   }, [])
 
@@ -52,7 +53,8 @@ export default function SubSectionModal({
     if (
       currentValues.lectureTitle !== modalData.title ||
       currentValues.lectureDesc !== modalData.description ||
-      currentValues.lectureVideo !== modalData.videoUrl
+      currentValues.lectureVideo !== modalData.videoUrl ||
+      currentValues.lecturePdf !== modalData.pdfUrl
     ) {
       return true
     }
@@ -75,6 +77,9 @@ export default function SubSectionModal({
     }
     if (currentValues.lectureVideo !== modalData.videoUrl) {
       formData.append("video", currentValues.lectureVideo)
+    }
+    if (currentValues.lecturePdf !== modalData.pdfUrl) {
+      formData.append("pdf", currentValues.lecturePdf)
     }
     setLoading(true)
     const result = await updateSubSection(formData, token)
@@ -108,7 +113,12 @@ export default function SubSectionModal({
     formData.append("sectionId", modalData)
     formData.append("title", data.lectureTitle)
     formData.append("description", data.lectureDesc)
-    formData.append("video", data.lectureVideo)
+    if (data.lectureVideo) {
+      formData.append("video", data.lectureVideo)
+    }
+    if (data.lecturePdf) {
+      formData.append("pdf", data.lecturePdf)
+    }
     setLoading(true)
     const result = await createSubSection(formData, token)
     if (result) {
@@ -143,13 +153,27 @@ export default function SubSectionModal({
           {/* Lecture Video Upload */}
           <Upload
             name="lectureVideo"
-            label="Lecture Video"
+            label="Lecture Video (Optional)"
             register={register}
             setValue={setValue}
             errors={errors}
             video={true}
             viewData={view ? modalData.videoUrl : null}
             editData={edit ? modalData.videoUrl : null}
+            // Make video optional by removing required validation
+            required={false}
+          />
+          {/* Lecture PDF Upload */}
+          <Upload
+            name="lecturePdf"
+            label="Lecture PDF (Optional)"
+            register={register}
+            setValue={setValue}
+            errors={errors}
+            accept=".pdf"
+            viewData={view ? modalData.pdfUrl : null}
+            editData={edit ? modalData.pdfUrl : null}
+            required={false}
           />
           {/* Lecture Title */}
           <div className="flex flex-col space-y-2">
