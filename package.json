@@ -30,6 +30,7 @@
     "camelcase-css": "^2.0.1",
     "chart.js": "^4.4.4",
     "chokidar": "^3.6.0",
+    "class-variance-authority": "^0.7.1",
     "color-convert": "^2.0.1",
     "color-name": "^1.1.4",
     "combined-stream": "^1.0.8",
