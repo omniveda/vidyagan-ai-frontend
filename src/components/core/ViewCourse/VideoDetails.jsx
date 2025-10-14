@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { FaRedoAlt } from "react-icons/fa";
+import { FaRedoAlt, FaQuestionCircle } from "react-icons/fa";
 import "video-react/dist/video-react.css"
 import { useLocation } from "react-router-dom"
 import { BigPlayButton, Player } from "video-react"
 
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI"
 import { updateCompletedLectures } from "../../../slices/viewCourseSlice"
+import { getMCQsForStudent } from "../../../services/operations/mcqAPI"
 import IconBtn from "../../common/IconBtn"
+import MCQModal from "../../core/Course/MCQModal"
 
 const VideoDetails = () => {
   const { courseId, sectionId, subSectionId } = useParams()
@@ -24,6 +26,8 @@ const VideoDetails = () => {
   const [previewSource, setPreviewSource] = useState("")
   const [videoEnded, setVideoEnded] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [showMCQModal, setShowMCQModal] = useState(false)
+  const [hasMCQs, setHasMCQs] = useState(false)
 
   useEffect(() => {
     console.log("courseSectionData", courseSectionData);
@@ -52,6 +56,26 @@ const VideoDetails = () => {
       }
     })()
   }, [courseSectionData, courseEntireData, location.pathname])
+
+  // Check if MCQs exist for this subsection
+  useEffect(() => {
+    const checkForMCQs = async () => {
+      if (courseId && subSectionId) {
+        try {
+          const response = await getMCQsForStudent(token, courseId, subSectionId)
+          if (response.success && response.data.length > 0) {
+            setHasMCQs(true)
+          } else {
+            setHasMCQs(false)
+          }
+        } catch (error) {
+          console.error("Error checking for MCQs:", error)
+          setHasMCQs(false)
+        }
+      }
+    }
+    checkForMCQs()
+  }, [courseId, subSectionId, token])
 
   // Disable right-click and dev tools shortcuts
   useEffect(() => {
@@ -308,6 +332,36 @@ const VideoDetails = () => {
           </div>
         </div>
       )}
+
+      {/* MCQ Section */}
+      {hasMCQs && (
+        <div className="mt-6 p-4 bg-richblack-700 rounded-lg">
+          <h2 className="text-xl font-semibold text-white mb-3">Practice Quiz</h2>
+          <div className="flex items-center gap-4">
+            <div className="text-4xl text-yellow-500">
+              <FaQuestionCircle />
+            </div>
+            <div className="flex-1">
+              <p className="text-white font-medium">Test your knowledge</p>
+              <p className="text-gray-300 text-sm">Take a quick quiz to reinforce what you've learned</p>
+            </div>
+            <button
+              onClick={() => setShowMCQModal(true)}
+              className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-md transition-colors duration-200 font-semibold"
+            >
+              Start Quiz
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* MCQ Modal */}
+      <MCQModal
+        courseId={courseId}
+        subsectionId={subSectionId}
+        isOpen={showMCQModal}
+        onClose={() => setShowMCQModal(false)}
+      />
     </div>
   )
 }

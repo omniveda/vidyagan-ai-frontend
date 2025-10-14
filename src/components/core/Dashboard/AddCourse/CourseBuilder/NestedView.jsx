@@ -12,6 +12,7 @@ import {
 } from "../../../../../services/operations/courseDetailsAPI"
 import { setCourse } from "../../../../../slices/courseSlice"
 import ConfirmationModal from "../../../../common/ConfirmationModal"
+import MCQManager from "../../EditCourse/MCQManager"
 import SubSectionModal from "./SubSectionModal"
 
 export default function NestedView({ handleChangeEditSectionName }) {
@@ -24,6 +25,8 @@ export default function NestedView({ handleChangeEditSectionName }) {
   const [editSubSection, setEditSubSection] = useState(null)
   // to keep track of confirmation modal
   const [confirmationModal, setConfirmationModal] = useState(null)
+  // to manage MCQs for a subsection
+  const [selectedSubsectionForMCQ, setSelectedSubsectionForMCQ] = useState(null)
 
   const handleDeleleSection = async (sectionId) => {
     const result = await deleteSection({
@@ -136,6 +139,12 @@ export default function NestedView({ handleChangeEditSectionName }) {
                     >
                       <RiDeleteBin6Line className="text-xl text-black" />
                     </button>
+                    <button
+                      onClick={() => setSelectedSubsectionForMCQ(data)}
+                      className="ml-2 rounded bg-yellow-50 px-2 py-1 text-black"
+                    >
+                      Manage MCQs
+                    </button>
                   </div>
                 </div>
               ))}
@@ -151,6 +160,23 @@ export default function NestedView({ handleChangeEditSectionName }) {
           </details>
         ))}
       </div>
+      {/* MCQ Manager */}
+      {selectedSubsectionForMCQ && (
+        <div className="mt-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-semibold text-black">
+              MCQs for "{selectedSubsectionForMCQ.title}"
+            </h3>
+            <button
+              onClick={() => setSelectedSubsectionForMCQ(null)}
+              className="text-black underline"
+            >
+              Close
+            </button>
+          </div>
+          <MCQManager courseId={course._id} subsectionId={selectedSubsectionForMCQ._id} />
+        </div>
+      )}
       {/* Modal Display */}
       {addSubSection ? (
         <SubSectionModal

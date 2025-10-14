@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { FaPlus, FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 import { createMCQ, getMCQsByCourse, updateMCQ, deleteMCQ } from "../../../../services/operations/mcqAPI";
 
-const MCQManager = ({ courseId }) => {
+const MCQManager = ({ courseId, subsectionId }) => {
   const { token } = useSelector((state) => state.auth);
   const [mcqs, setMcqs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,12 +17,17 @@ const MCQManager = ({ courseId }) => {
 
   useEffect(() => {
     fetchMCQs();
-  }, [courseId]);
+  }, [courseId, subsectionId]);
 
   const fetchMCQs = async () => {
     try {
       setLoading(true);
-      const response = await getMCQsByCourse(token, courseId);
+      if (!subsectionId) {
+        setMcqs([]);
+        setLoading(false);
+        return;
+      }
+      const response = await getMCQsByCourse(token, courseId, subsectionId);
       if (response.success) {
         setMcqs(response.data);
       }
@@ -52,6 +57,7 @@ const MCQManager = ({ courseId }) => {
       const mcqData = {
         ...formData,
         courseId,
+        subsectionId,
         correctAnswer: parseInt(formData.correctAnswer)
       };
 

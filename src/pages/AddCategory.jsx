@@ -15,7 +15,7 @@ const AddCategory = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://vidyagan-ai.com/api/v1/course/createCategory", {
+      const response = await fetch("https://vidyagan-ai-server.onrender.com/api/v1/course/createCategory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const AddCategory = () => {
   // Function to fetch all categories
   const fetchCategories = async () => {
     try {
-      const response = await fetch("https://vidyagan-ai.com/api/v1/course/showAllCategories", {
+      const response = await fetch("https://vidyagan-ai-server.onrender.com/api/v1/course/showAllCategories", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`, // Include JWT token for admin auth
@@ -63,7 +63,7 @@ const AddCategory = () => {
   // Function to delete a category
   const deleteCategory = async (categoryId) => {
     try {
-      const response = await fetch(`https://vidyagan-ai.com/api/v1/course/deleteCategory/${categoryId}`, {
+      const response = await fetch(`https://vidyagan-ai-server.onrender.com/api/v1/course/deleteCategory/${categoryId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`, // Include JWT token for admin auth

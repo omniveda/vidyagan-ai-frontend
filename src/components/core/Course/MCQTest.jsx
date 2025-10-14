@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { getMCQsForStudent, validateMCQAnswers } from "../../../services/operations/mcqAPI";
 
-const MCQTest = ({ courseId }) => {
+const MCQTest = ({ courseId, subsectionId }) => {
   const { token, user } = useSelector((state) => state.auth);
   const [mcqs, setMcqs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ const MCQTest = ({ courseId }) => {
   const fetchMCQs = async () => {
     try {
       setLoading(true);
-      const response = await getMCQsForStudent(token, courseId);
+      const response = await getMCQsForStudent(token, courseId, subsectionId);
       if (response.success) {
         setMcqs(response.data);
         // Initialize answers object
@@ -46,7 +46,7 @@ const MCQTest = ({ courseId }) => {
   const handleSubmit = async () => {
     try {
       setSubmitting(true);
-      const response = await validateMCQAnswers(token, courseId, answers);
+      const response = await validateMCQAnswers(token, courseId, answers, subsectionId);
       if (response.success) {
         setResults(response.data);
         setShowResults(true);

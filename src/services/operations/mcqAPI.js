@@ -15,10 +15,13 @@ export const createMCQ = async (token, mcqData) => {
   }
 };
 
-// Get MCQs for a course (instructor)
-export const getMCQsByCourse = async (token, courseId) => {
+// Get MCQs for a course or subsection (instructor)
+export const getMCQsByCourse = async (token, courseId, subsectionId = null) => {
   try {
-    const response = await api.get(`/api/v1/mcq/course/${courseId}`, {
+    const url = subsectionId
+      ? `/api/v1/mcq/course/${courseId}/${subsectionId}`
+      : `/api/v1/mcq/course/${courseId}`;
+    const response = await api.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -30,10 +33,13 @@ export const getMCQsByCourse = async (token, courseId) => {
   }
 };
 
-// Get MCQs for student
-export const getMCQsForStudent = async (token, courseId) => {
+// Get MCQs for student by course or subsection
+export const getMCQsForStudent = async (token, courseId, subsectionId = null) => {
   try {
-    const response = await api.get(`/api/v1/mcq/student/course/${courseId}`, {
+    const url = subsectionId
+      ? `/api/v1/mcq/student/course/${courseId}/${subsectionId}`
+      : `/api/v1/mcq/student/course/${courseId}`;
+    const response = await api.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -75,11 +81,14 @@ export const deleteMCQ = async (token, mcqId) => {
   }
 };
 
-// Validate student answers
-export const validateMCQAnswers = async (token, courseId, answers) => {
+// Validate student answers by course or subsection
+export const validateMCQAnswers = async (token, courseId, answers, subsectionId = null) => {
   try {
+    const url = subsectionId
+      ? `/api/v1/mcq/validate/${courseId}/${subsectionId}`
+      : `/api/v1/mcq/validate/${courseId}`;
     const response = await api.post(
-      `/api/v1/mcq/validate/${courseId}`,
+      url,
       { answers },
       {
         headers: {

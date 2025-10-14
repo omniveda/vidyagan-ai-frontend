@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL || "https://vidyagan-ai.com/api/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://vidyagan-ai-server.onrender.com/api/v1";
 
 // AUTH ENDPOINTS
 export const endpoints = {
