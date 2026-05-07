@@ -16,18 +16,18 @@ export default function EnrolledCourses() {
   const [mcqModalOpen, setMcqModalOpen] = useState(false)
   const [selectedCourseId, setSelectedCourseId] = useState(null)
   
-  const getEnrolledCourses = async () => {
-    try {
-      const res = await getUserEnrolledCourses(token);
-
-      setEnrolledCourses(res);
-    } catch (error) {
-      console.log("Could not fetch enrolled courses.")
-    }
-  };
   useEffect(() => {
+    const getEnrolledCourses = async () => {
+      try {
+        const res = await getUserEnrolledCourses(token);
+
+        setEnrolledCourses(res);
+      } catch (error) {
+        console.log("Could not fetch enrolled courses.")
+      }
+    };
     getEnrolledCourses();
-  }, [])
+  }, [token])
 
   return (
     <>

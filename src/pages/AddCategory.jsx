@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 
 const AddCategory = () => {
@@ -40,7 +40,7 @@ const AddCategory = () => {
   };
 
   // Function to fetch all categories
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch("https://vidyagan-ai-server.onrender.com/api/v1/course/showAllCategories", {
         method: "GET",
@@ -58,7 +58,7 @@ const AddCategory = () => {
     } catch (error) {
       setError(error.message);
     }
-  };
+  }, [token]);
 
   // Function to delete a category
   const deleteCategory = async (categoryId) => {
@@ -84,7 +84,7 @@ const AddCategory = () => {
   // Fetch categories when component mounts
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [fetchCategories]);
 
   return (
     <div className="flex flex-col items-center h-screen bg-gray-100">

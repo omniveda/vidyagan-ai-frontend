@@ -24,59 +24,59 @@ const AdminDashboard = () => {
 
   // Fetch categories, students, instructors, and analytics
 
-  const fetchData = async () => {
-    try {
-      // Fetch categories
-      const categoryResponse = await axios.get(
-        "https://vidyagan-ai-server.onrender.com/api/v1/course/showAllCategories",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setCategories(categoryResponse.data.data);
-
-      // Fetch analytics
-      const analyticsResponse = await axios.get(
-        "https://vidyagan-ai-server.onrender.com/api/v1/admin/analytics",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setAnalytics(analyticsResponse.data.data);
-
-      // Fetch students
-      const studentsResponse = await axios.get(
-        "https://vidyagan-ai-server.onrender.com/api/v1/admin/students",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setStudents(studentsResponse.data.students);
-
-      // Fetch instructors
-      const instructorsResponse = await axios.get(
-        "https://vidyagan-ai-server.onrender.com/api/v1/admin/instructors",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setInstructors(instructorsResponse.data.instructors);
-    } catch (error) {
-      setError("Error fetching data. Please try again.");
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch categories
+        const categoryResponse = await axios.get(
+          "https://vidyagan-ai-server.onrender.com/api/v1/course/showAllCategories",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setCategories(categoryResponse.data.data);
+
+        // Fetch analytics
+        const analyticsResponse = await axios.get(
+          "https://vidyagan-ai-server.onrender.com/api/v1/admin/analytics",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setAnalytics(analyticsResponse.data.data);
+
+        // Fetch students
+        const studentsResponse = await axios.get(
+          "https://vidyagan-ai-server.onrender.com/api/v1/admin/students",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setStudents(studentsResponse.data.students);
+
+        // Fetch instructors
+        const instructorsResponse = await axios.get(
+          "https://vidyagan-ai-server.onrender.com/api/v1/admin/instructors",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setInstructors(instructorsResponse.data.instructors);
+      } catch (error) {
+        setError("Error fetching data. Please try again.");
+      }
+    };
+
     fetchData();
-  }, []);
+  }, [token]);
 
   // Add new category
   const handleAddCategory = async (e) => {

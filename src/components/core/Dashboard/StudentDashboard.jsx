@@ -22,31 +22,31 @@ export default function StudentDashboard() {
   const [mcqModalOpen, setMcqModalOpen] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
 
-  const getEnrolledCourses = async () => {
-    try {
-      const res = await getUserEnrolledCourses(token);
-      setEnrolledCourses(res);
-    } catch (error) {
-      console.log("Could not fetch enrolled courses.");
-    }
-  };
-
-  const fetchTrendingCourses = async () => {
-    try {
-      const response = await axios.get(courses.COURSES_API);
-      // Take the first 3 courses to show as trending
-      setTrendingCourses(response.data.data.slice(0, 3));
-    } catch (error) {
-      console.log("Error fetching trending courses:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const getEnrolledCourses = async () => {
+      try {
+        const res = await getUserEnrolledCourses(token);
+        setEnrolledCourses(res);
+      } catch (error) {
+        console.log("Could not fetch enrolled courses.");
+      }
+    };
+
+    const fetchTrendingCourses = async () => {
+      try {
+        const response = await axios.get(courses.COURSES_API);
+        // Take the first 3 courses to show as trending
+        setTrendingCourses(response.data.data.slice(0, 3));
+      } catch (error) {
+        console.log("Error fetching trending courses:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     getEnrolledCourses();
     fetchTrendingCourses();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (enrolledCourses && enrolledCourses.length > 0) {
