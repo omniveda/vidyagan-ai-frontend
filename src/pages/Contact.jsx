@@ -33,9 +33,9 @@ const Contact = () => {
         {/* Hero Section with Responsive Image */}
         <div className="text-center mb-12">
           <div className="mb-8">
-            <img 
-              src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-              alt="English consultation and support" 
+            <img
+              src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+              alt="English consultation and support"
               className="mx-auto rounded-lg shadow-xl w-full max-w-4xl h-64 md:h-80 object-cover"
             />
           </div>
@@ -134,9 +134,9 @@ const Contact = () => {
           <div className="space-y-8">
             {/* Office Image */}
             <div className="mb-8">
-              <img 
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                alt="VidyaGan-AI learning center" 
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="ORN-AI learning center"
                 className="rounded-lg shadow-lg w-full h-48 object-cover"
               />
             </div>
@@ -152,7 +152,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-semibold">Email</p>
-                    <p className="text-[#4B5563]">info@vidyaganai.com</p>
+                    <p className="text-[#4B5563]">connect@orn-ai.co.uk</p>
                   </div>
                 </div>
 
@@ -162,7 +162,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-semibold">Phone</p>
-                    <p className="text-[#4B5563]">+91 7416227573</p>
+                    <p className="text-[#4B5563]">+91 9059366967</p>
                   </div>
                 </div>
 
@@ -217,20 +217,20 @@ const Contact = () => {
             <div>
               <h2 className="text-3xl font-bold text-[#111827] mb-6">Visit Our Learning Center</h2>
               <p className="text-lg text-[#374151] leading-relaxed mb-4">
-                Experience our interactive learning environment firsthand. Schedule a visit to our center 
+                Experience our interactive learning environment firsthand. Schedule a visit to our center
                 where you can meet our instructors, see our facilities, and get a feel for our teaching methodology.
               </p>
               <p className="text-lg text-[#374151] leading-relaxed">
-                We also offer virtual tours for those who prefer to explore our offerings online before 
+                We also offer virtual tours for those who prefer to explore our offerings online before
                 making a commitment.
               </p>
             </div>
             <div className="relative">
-              <img 
+              <img
                 src="/image/11.jpg"
-                alt="Modern English learning center with students" 
+                alt="Modern English learning center with students"
                 className="rounded-lg shadow-lg w-full h-64 md:h-80 object-cover"
-                />
+              />
             </div>
           </div>
         </div>

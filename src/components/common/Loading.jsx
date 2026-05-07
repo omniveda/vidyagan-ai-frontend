@@ -5,7 +5,7 @@ import { PropagateLoader } from 'react-spinners';
 const SecCouncil = () => {
   return (
     <div style={secCouncilStyles.container}>
-      <h2 style={secCouncilStyles.text}>VidyaGan-AI</h2>
+      <h2 style={secCouncilStyles.text}>ORN-AI</h2>
     </div>
   );
 };
