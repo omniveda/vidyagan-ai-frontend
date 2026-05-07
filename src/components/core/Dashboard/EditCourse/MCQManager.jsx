@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { FaPlus, FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 import { createMCQ, getMCQsByCourse, updateMCQ, deleteMCQ } from "../../../../services/operations/mcqAPI";
@@ -17,9 +17,9 @@ const MCQManager = ({ courseId, subsectionId }) => {
 
   useEffect(() => {
     fetchMCQs();
-  }, [courseId, subsectionId]);
+  }, [fetchMCQs]);
 
-  const fetchMCQs = async () => {
+  const fetchMCQs = useCallback(async () => {
     try {
       setLoading(true);
       if (!subsectionId) {
@@ -36,7 +36,7 @@ const MCQManager = ({ courseId, subsectionId }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token, courseId, subsectionId]);
 
   const handleInputChange = (e, index = null) => {
     const { name, value } = e.target;

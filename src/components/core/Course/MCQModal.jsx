@@ -16,10 +16,43 @@ const MCQModal = ({ courseId, subsectionId, isOpen, onClose }) => {
   const timerRef = useRef(null);
 
   useEffect(() => {
+    const fetchMCQs = async () => {
+      try {
+        setLoading(true);
+        const response = await getMCQsForStudent(token, courseId, subsectionId);
+        if (response.success) {
+          setMcqs(response.data);
+          // Initialize answers object
+          const initialAnswers = {};
+          response.data.forEach(mcq => {
+            initialAnswers[mcq._id] = null;
+          });
+          setAnswers(initialAnswers);
+          setResults(null);
+          setShowResults(false);
+          setCurrentQuestionIndex(0);
+          setTimeLeft(60);
+        }
+      } catch (error) {
+        console.error("Error fetching MCQs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (isOpen && courseId) {
       fetchMCQs();
     }
-  }, [isOpen, courseId]);
+  }, [isOpen, courseId, token, subsectionId]);
+
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex < mcqs.length - 1) {
+      setCurrentQuestionIndex(prev => prev + 1);
+    } else {
+      // Last question, auto-submit
+      handleSubmit();
+    }
+  };
 
   useEffect(() => {
     if (mcqs.length > 0 && !showResults) {
@@ -39,44 +72,12 @@ const MCQModal = ({ courseId, subsectionId, isOpen, onClose }) => {
         clearInterval(timerRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestionIndex, mcqs.length, showResults]);
-
-  const handleNextQuestion = () => {
-    if (currentQuestionIndex < mcqs.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-      // Last question, auto-submit
-      handleSubmit();
-    }
-  };
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
-    }
-  };
-
-  const fetchMCQs = async () => {
-    try {
-      setLoading(true);
-      const response = await getMCQsForStudent(token, courseId, subsectionId);
-      if (response.success) {
-        setMcqs(response.data);
-        // Initialize answers object
-        const initialAnswers = {};
-        response.data.forEach(mcq => {
-          initialAnswers[mcq._id] = null;
-        });
-        setAnswers(initialAnswers);
-        setResults(null);
-        setShowResults(false);
-        setCurrentQuestionIndex(0);
-        setTimeLeft(60);
-      }
-    } catch (error) {
-      console.error("Error fetching MCQs:", error);
-    } finally {
-      setLoading(false);
     }
   };
 

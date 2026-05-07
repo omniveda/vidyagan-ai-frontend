@@ -13,28 +13,28 @@ const MCQTest = ({ courseId, subsectionId }) => {
   const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
-    fetchMCQs();
-  }, [courseId]);
-
-  const fetchMCQs = async () => {
-    try {
-      setLoading(true);
-      const response = await getMCQsForStudent(token, courseId, subsectionId);
-      if (response.success) {
-        setMcqs(response.data);
-        // Initialize answers object
-        const initialAnswers = {};
-        response.data.forEach(mcq => {
-          initialAnswers[mcq._id] = null;
-        });
-        setAnswers(initialAnswers);
+    const fetchMCQs = async () => {
+      try {
+        setLoading(true);
+        const response = await getMCQsForStudent(token, courseId, subsectionId);
+        if (response.success) {
+          setMcqs(response.data);
+          // Initialize answers object
+          const initialAnswers = {};
+          response.data.forEach(mcq => {
+            initialAnswers[mcq._id] = null;
+          });
+          setAnswers(initialAnswers);
+        }
+      } catch (error) {
+        console.error("Error fetching MCQs:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching MCQs:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchMCQs();
+  }, [courseId, subsectionId, token]);
 
   const handleAnswerSelect = (mcqId, optionIndex) => {
     setAnswers(prev => ({
