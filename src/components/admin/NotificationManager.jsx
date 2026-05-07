@@ -265,7 +265,7 @@
 
 // claude updated
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { apiConnector } from "././../../services/apiconnector";
 import { notificationEndpoints } from "./../../services/apis";
@@ -282,11 +282,7 @@ function NotificationManager() {
   const [loading, setLoading] = useState(false);
   const [historyLoading, setHistoryLoading] = useState(false);
 
-  useEffect(() => {
-    fetchNotificationHistory();
-  }, []);
-
-  const fetchNotificationHistory = async () => {
+  const fetchNotificationHistory = useCallback(async () => {
     try {
       setHistoryLoading(true);
       const response = await apiConnector(
@@ -307,7 +303,11 @@ function NotificationManager() {
     } finally {
       setHistoryLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchNotificationHistory();
+  }, [fetchNotificationHistory]);
 
   const handleSendNotification = async (e) => {
     e.preventDefault();

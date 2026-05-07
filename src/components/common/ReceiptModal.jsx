@@ -10,22 +10,22 @@ const ReceiptModal = ({ isOpen, onClose }) => {
   const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    const fetchReceipts = async () => {
+      setLoading(true);
+      try {
+        const receiptsData = await getUserReceipts(token);
+        setReceipts(receiptsData);
+      } catch (error) {
+        console.log("Error fetching receipts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (isOpen && token) {
       fetchReceipts();
     }
   }, [isOpen, token]);
-
-  const fetchReceipts = async () => {
-    setLoading(true);
-    try {
-      const receiptsData = await getUserReceipts(token);
-      setReceipts(receiptsData);
-    } catch (error) {
-      console.log("Error fetching receipts:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDownloadReceipt = async (payment) => {
     await downloadReceipt(payment, token);
